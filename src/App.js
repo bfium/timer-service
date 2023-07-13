@@ -1,16 +1,10 @@
 import './App.css';
+import EditableTimer from "./Components/Timers/EditableTimer";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-      </header>
-        <hr/>
-      <div>
-        <section>
-
-        </section>
-      </div>
+      <EditableTimer/>
     </div>
   );
 }
