@@ -1,0 +1,29 @@
+[
+  {
+    "id": "0a4a79cb-b06d-4cb1-883d-549a1e3b66d7",
+    "title": "Mow the lawn",
+    "project": "House Chores",
+    "elapsed": 5459741,
+    "runningSince": null
+  },
+  {
+    "id": "a73c1d19-f32d-4aff-b470-cea4e792406a",
+    "title": "Clear paper jam",
+    "project": "Office Chores",
+    "elapsed": 1273998
+  },
+  {
+    "id": "2c43306e-5b44-4ff8-8753-33c35adbd06f",
+    "title": "Ponder origins of universe",
+    "project": "Life Chores",
+    "elapsed": 232324912665,
+    "runningSince": null
+  },
+  {
+    "id": "9637a377-de21-49c1-a413-9613ad263ff2",
+    "title": "Speech",
+    "project": "Time-logging app",
+    "elapsed": 0,
+    "runningSince": 1688550839931
+  }
+]

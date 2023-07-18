@@ -1,11 +1,9 @@
 import './App.css';
-import EditableTimer from "./Components/Timers/EditableTimer";
+import TimersDachboard from "./Components/Timers/TimersDachboard";
 
 function App() {
   return (
-    <div className="App">
-      <EditableTimer/>
-    </div>
+      <TimersDachboard/>
   );
 }
 
