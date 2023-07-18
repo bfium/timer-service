@@ -1,5 +1,5 @@
 import './App.css';
-import TimersDachboard from "./Components/TimersDachboard";
+import TimersDachboard from "./TimersDachboard";
 
 function App() {
   return (

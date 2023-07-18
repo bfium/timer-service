@@ -4,12 +4,13 @@
 */
 import React from "react";
 import {v4} from "uuid";
-//import client from "./client";
-import * as helpers from "../helpers";
+import clientProxy from "./ClientProxy";
+import ClientProxy from "./ClientProxy";
 export default class TimersDashboard extends React.Component {
     state = {
         timers: [],
     };
+    client = new ClientProxy();
 
     componentDidMount() {
         this.loadTimersFromServer();
@@ -17,7 +18,7 @@ export default class TimersDashboard extends React.Component {
     }
 
     loadTimersFromServer = () => {
-        client.getTimers((serverTimers) => (
+        this.client.getTimers((serverTimers) => (
                 this.setState({ timers: serverTimers })
             )
         );
@@ -60,7 +61,7 @@ export default class TimersDashboard extends React.Component {
             timers: this.state.timers.concat(t),
         });
 
-        client.createTimer(t);
+        this.client.createTimer(t);
     };
 
     updateTimer = (attrs) => {
@@ -77,7 +78,7 @@ export default class TimersDashboard extends React.Component {
             }),
         });
 
-        client.updateTimer(attrs);
+        this.client.updateTimer(attrs);
     };
 
     deleteTimer = (timerId) => {
@@ -85,7 +86,7 @@ export default class TimersDashboard extends React.Component {
             timers: this.state.timers.filter(t => t.id !== timerId),
         });
 
-        client.deleteTimer(
+        this.client.deleteTimer(
             { id: timerId }
         );
     };
@@ -106,7 +107,7 @@ export default class TimersDashboard extends React.Component {
             }),
         });
 
-        client.startTimer(
+        this.client.startTimer(
             { id: timerId, start: now }
         );
     };
@@ -128,7 +129,7 @@ export default class TimersDashboard extends React.Component {
             }),
         });
 
-        client.stopTimer(
+        this.client.stopTimer(
             { id: timerId, stop: now }
         );
     };
@@ -137,7 +138,7 @@ export default class TimersDashboard extends React.Component {
         return (
             <div className='ui three column centered grid'>
                 <div className='column'>
-                    <EditableTimerList
+                    <EditableTimerList                  // manage CRUD
                         timers={this.state.timers}
                         onFormSubmit={this.handleEditFormSubmit}
                         onTrashClick={this.handleTrashClick}
