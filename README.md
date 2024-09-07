@@ -1,4 +1,4 @@
-# A Simple React App called Timer App
+# A Simple Timer API
 
 ## Available Scripts
 
