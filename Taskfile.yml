@@ -1,0 +1,21 @@
+version: "3"
+
+tasks:
+  # Task to start the Node.js timer service
+  start-timer-service:
+    desc: Run the Node timer service
+    cmds:
+      - node src/timer_service/server.js
+
+  # Task to start the React app
+  start-react-app:
+    desc: "Start the React Timer App"
+    cmds:
+      - npm start
+
+  # Combined task to run both the timer service and the React app
+  start:
+    desc: Run the Node timer service and start the React Timer App
+    cmds:
+      - task: start-timer-service
+      - task: start-react-app

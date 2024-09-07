@@ -4,7 +4,7 @@
 
 In the project directory, you can run:
 
-### `npm start`
+### `node src/timer_service/server.js`
 
 And then run
-### `node src/timer_service/server.js`
+### `npm start`
