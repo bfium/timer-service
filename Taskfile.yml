@@ -5,7 +5,7 @@ tasks:
   start-timer-service:
     desc: Run the Node timer service
     cmds:
-      - node server.js
+      - node timer_service/server.js
 
   start:
     desc: Run the Node timer service
