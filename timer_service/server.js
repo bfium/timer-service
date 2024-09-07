@@ -4,6 +4,8 @@ import bodyParser from 'body-parser';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import cors from 'cors'; // Import the CORS package
+
 
 const app = express();
 const port = process.env.API_PORT || 3003;
@@ -13,6 +15,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const DATA_FILE = path.join(__dirname, 'db.json');
+
+// Enable CORS for all origins (you can restrict this to specific origins if necessary)
+app.use(cors({ origin: 'http://localhost:3002' })); // Allow only this front-end origin
 
 // Set up middleware
 app.use('/', express.static(path.join(__dirname, 'public')));
