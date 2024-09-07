@@ -3574,7 +3574,7 @@ $.fn.dropdown.settings = {
     count         : '{count} selected',
     maxSelections : 'Max {maxCount} selections',
     noResults     : 'No results found.',
-    serverError   : 'There was an error contacting the server'
+    serverError   : 'There was an error contacting the timer_service'
   },
 
   error : {

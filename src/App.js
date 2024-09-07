@@ -1,9 +1,8 @@
-import './App.css';
-import TimersDachboard from "./TimersDachboard";
+import TimersDashboard from "./client/boundary/user_interaction/TimersDashboard";
 
 function App() {
   return (
-      <TimersDachboard/>
+    <TimersDashboard/>
   );
 }
 

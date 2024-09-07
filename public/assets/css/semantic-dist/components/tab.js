@@ -275,7 +275,7 @@ $.fn.tab = function(parameters) {
                 ? settings.path.replace(/\/$/, '') + '/{$tab}'
                 : '/{$tab}'
             ;
-            module.verbose('Setting up automatic tab retrieval from server', url);
+            module.verbose('Setting up automatic tab retrieval from timer_service', url);
             if($.isPlainObject(settings.apiSettings)) {
               settings.apiSettings.url = url;
             }

@@ -250,7 +250,7 @@ body.pushable > .pusher {
 
 /*
   iOS incorrectly sizes document when content
-  is presented outside of view with 2Dtranslate
+  is presented outside of client with 2Dtranslate
 */
 html.ios {
   overflow-x: hidden;

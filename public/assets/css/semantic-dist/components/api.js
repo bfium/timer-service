@@ -534,7 +534,7 @@ $.api = $.fn.api = function(parameters) {
               module.debug('Successful API Response', response);
               if(settings.cache === 'local' && url) {
                 module.write.cachedResponse(url, response);
-                module.debug('Saving server response locally', module.cache);
+                module.debug('Saving timer_service response locally', module.cache);
               }
               settings.onSuccess.call(context, response, $module, xhr);
             },
@@ -567,11 +567,11 @@ $.api = $.fn.api = function(parameters) {
                 return true;
               }
               else if(status == 'invalid') {
-                module.debug('JSON did not pass success test. A server-side error has most likely occurred', response);
+                module.debug('JSON did not pass success test. A timer_service-side error has most likely occurred', response);
               }
               else if(status == 'error') {
                 if(xhr !== undefined) {
-                  module.debug('XHR produced a server error', status, httpMessage);
+                  module.debug('XHR produced a timer_service error', status, httpMessage);
                   // make sure we have an error to display to console
                   if( xhr.status != 200 && httpMessage !== undefined && httpMessage !== '') {
                     module.error(error.statusMessage + httpMessage, ajaxSettings.url);
@@ -662,7 +662,7 @@ $.api = $.fn.api = function(parameters) {
               .done(module.event.xhr.done)
               .fail(module.event.xhr.fail)
             ;
-            module.verbose('Created server request', xhr, ajaxSettings);
+            module.verbose('Created timer_service request', xhr, ajaxSettings);
             return xhr;
           }
         },
@@ -702,7 +702,7 @@ $.api = $.fn.api = function(parameters) {
           errorFromRequest: function(response, status, httpMessage) {
             return ($.isPlainObject(response) && response.error !== undefined)
               ? response.error // use json error message
-              : (settings.error[status] !== undefined) // use server error message
+              : (settings.error[status] !== undefined) // use timer_service error message
                 ? settings.error[status]
                 : httpMessage
             ;
@@ -1114,7 +1114,7 @@ $.api.settings = {
   // failed JSON success test
   onFailure   : function(response, $module) {},
 
-  // server error
+  // timer_service error
   onError     : function(errorMessage, $module) {},
 
   // request aborted

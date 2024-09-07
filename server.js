@@ -10,7 +10,7 @@ console.log({ starting: true });
 const app  = express();
 const DATA_FILE = path.join(__dirname,'data.json');
 
-app.set('port',process.env.PORT||3000);
+app.set('port',process.env.PORT||3004);
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
