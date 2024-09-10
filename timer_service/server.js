@@ -1,23 +1,21 @@
-/* eslint-disable no-param-reassign */
 import express from 'express';
 import bodyParser from 'body-parser';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import cors from 'cors'; // Import the CORS package
-
-
+import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 const app = express();
 const port = process.env.API_PORT || 3003;
 
-// Helper to get the current directory (because __dirname is not available in ES modules)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const DATA_FILE = path.join(__dirname, 'db.json');
 
-// Enable CORS for all origins (you can restrict this to specific origins if necessary)
-app.use(cors({ origin: 'http://localhost:3002' })); // Allow only this front-end origin
+// Enable CORS for specific origin (customize as needed)
+app.use(cors({ origin: `http://localhost:${port}` }));
 
 // Set up middleware
 app.use('/', express.static(path.join(__dirname, 'public')));
@@ -44,7 +42,22 @@ const writeTimers = async (timers) => {
   await fs.writeFile(DATA_FILE, data, 'utf8');
 };
 
+// Load OpenAPI specification
+const openapiSpec = YAML.load(path.join(__dirname, './oas.yaml'));
 
+// Serve the OpenAPI documentation using Swagger UI
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpec));
+/*
+// Middleware to validate requests based on OpenAPI spec
+app.use(
+  OpenApiValidator({
+    apiSpec: path.join(__dirname, './oas.yaml'),
+    validateRequests: true,    // Automatically validate requests against the spec
+    validateResponses: false,  // Optional: Validate responses
+  })
+);*/
+
+// GET /api/timers
 app.get('/api/timers', async (req, res) => {
   try {
     const timers = await readTimers();
@@ -55,6 +68,7 @@ app.get('/api/timers', async (req, res) => {
   }
 });
 
+// POST /api/timers
 app.post('/api/timers', async (req, res) => {
   try {
     const newTimer = req.body;
@@ -68,21 +82,19 @@ app.post('/api/timers', async (req, res) => {
   }
 });
 
-
+// PUT /api/timers/:id
 app.put('/api/timers/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const updatedTimer = req.body;
     let timers = await readTimers();
 
-
     const timerIndex = timers.findIndex((timer) => timer.id === id);
     if (timerIndex === -1) {
       return res.status(404).json({ error: 'Timer not found' });
     }
 
-
-    timers[timerIndex] = { ...timers[timerIndex], ...updatedTimer };
+    timers[timerIndex] = { ...timers[timerIndex], ...updatedTimer };  // Spread operator for non-mutating update
     await writeTimers(timers);
     res.json(timers[timerIndex]);
   } catch (err) {
@@ -91,7 +103,7 @@ app.put('/api/timers/:id', async (req, res) => {
   }
 });
 
-
+// DELETE /api/timers/:id
 app.delete('/api/timers/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -103,14 +115,14 @@ app.delete('/api/timers/:id', async (req, res) => {
     }
 
     await writeTimers(newTimers);
-    res.status(204).end(); // 204 No Content indicates success without a response body
+    res.status(204).end();  // 204 No Content indicates success without a response body
   } catch (err) {
     console.error('Error deleting the timer:', err);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
-
+// Start the server
 app.listen(port, () => {
-  console.log(`Server running at: http://localhost:${port}/`); // eslint-disable-line no-console
+  console.log(`Server running at: http://localhost:${port}/`);  // eslint-disable-line no-console
 });

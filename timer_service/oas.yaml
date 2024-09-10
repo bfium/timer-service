@@ -1,0 +1,60 @@
+openapi: 3.0.0
+info:
+  title: Timer API
+  version: 1.0.0
+  description: API to retrieve timers with details of tasks and their running times.
+
+servers:
+  - url: http://localhost:3000
+    description: Local server
+
+paths:
+  /timers:
+    get:
+      summary: Retrieve a list of timers
+      description: Returns a list of timers with details like id, title, project, elapsed time, and running since timestamp.
+      responses:
+        '200':
+          description: A list of timers
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  timers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Timer'
+
+components:
+  schemas:
+    Timer:
+      type: object
+      required:
+        - id
+        - title
+        - project
+        - elapsed
+        - runningSince
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "0a4a79cb-b06d-4cb1-883d-549a1e3b66d7"
+          description: The unique identifier for the timer.
+        title:
+          type: string
+          example: "Freedom is Utopia"
+          description: The title of the task or timer.
+        project:
+          type: string
+          example: "House Chores"
+          description: The project or category under which this task is tracked.
+        elapsed:
+          type: integer
+          example: 4466685
+          description: The time elapsed for the task in milliseconds.
+        runningSince:
+          type: integer
+          example: 1620557958389
+          description: The timestamp (in milliseconds since epoch) when the timer started running.
